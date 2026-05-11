@@ -1,0 +1,424 @@
+:root {
+  --color-bg: #0f1a2e;
+  --color-sign: #1b2a4a;
+  --color-text: #ffffff;
+  --color-accent: #4fc3f7;
+  --color-divider: rgba(255, 255, 255, 0.15);
+  --color-footer-bg: #ffffff;
+  --color-footer-text: #1b2a4a;
+
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1.25rem;
+  --spacing-lg: 2rem;
+
+  --radius: 0.75rem;
+  --font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --transition-speed: 0.25s;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f1a2e 0%, #1b3a5c 40%, #ffffff 100%);
+  font-family: var(--font-family);
+  color: var(--color-text);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes squareSpin {
+  0%        { transform: translate(0, 0); }
+  12.5%     { transform: translate(30px, 0); }
+  25%       { transform: translate(30px, 0); }
+  37.5%     { transform: translate(30px, 30px); }
+  50%       { transform: translate(30px, 30px); }
+  62.5%     { transform: translate(0, 30px); }
+  75%       { transform: translate(0, 30px); }
+  87.5%     { transform: translate(0, 0); }
+  100%      { transform: translate(0, 0); }
+}
+
+@keyframes letterPop {
+  from { opacity: 0; transform: scale(0.3) rotate(-12deg); }
+  to   { opacity: 1; transform: scale(1)  rotate(0deg); }
+}
+
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateX(2.5rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes exclPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.25); filter: drop-shadow(0 0 8px currentColor); }
+}
+
+@keyframes badgeSlide {
+  from { opacity: 0; transform: translateX(-1.5rem) skewX(-4deg); }
+  to   { opacity: 1; transform: translateX(0) skewX(0); }
+}
+
+@keyframes floatSign {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  25%  { transform: translateY(-10px) rotate(0.4deg); }
+  50%  { transform: translateY(-4px) rotate(0deg); }
+  75%  { transform: translateY(-12px) rotate(-0.4deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes floatSignAlt {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  30%  { transform: translateY(-8px) rotate(-0.5deg); }
+  60%  { transform: translateY(-14px) rotate(0.3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  gap: var(--spacing-lg);
+}
+
+.page-title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-align: center;
+  animation: slideInLeft 0.8s ease-out both;
+}
+
+.signs-container {
+  display: grid;
+  grid-template-columns: minmax(20rem, 30rem);
+  justify-content: center;
+  gap: 4rem;
+}
+
+.sign {
+  width: min(90%, 28rem);
+  display: grid;
+  grid-template-rows: repeat(5, auto) auto;
+  background-color: var(--color-sign);
+  border-radius: var(--radius);
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  animation:
+    slideFromLeft 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both,
+    floatSign 5s ease-in-out 0.8s infinite;
+}
+
+.sign:nth-child(1) {
+  animation-delay: 0.1s, 0.9s;
+}
+.sign:nth-child(2) {
+  animation-delay: 0.35s, 1.2s;
+  animation-name: slideFromLeft, floatSignAlt;
+  animation-duration: 0.7s, 6s;
+}
+
+@supports (animation-timeline: view()) {
+  .sign {
+    animation:
+      slideFromLeft linear both,
+      floatSign 5s ease-in-out 0.8s infinite;
+    animation-timeline: slideFromLeft, auto;
+    animation-range: entry 0% entry 50%, normal;
+  }
+  .sign:nth-child(1) { animation-delay: 0s, 0.9s; }
+  .sign:nth-child(2) { animation-delay: 0s, 1.2s; }
+}
+
+.sign {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.sign:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 1.4rem 3.5rem rgba(0, 0, 0, 0.6);
+}
+
+.sign-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-divider);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-speed),
+    transform var(--transition-speed),
+    filter var(--transition-speed);
+}
+
+.sign-row:last-of-type {
+  border-bottom: none;
+}
+
+.sign-row:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+  transform: scale(1.02);
+  filter: brightness(1.15);
+}
+
+.sign-row:active {
+  transform: scale(0.98);
+}
+
+/* ── Texto de fila ── */
+.sign-text {
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.sign-arrow {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-left: var(--spacing-sm);
+  transition: transform var(--transition-speed);
+}
+
+.sign-row:hover .sign-arrow {
+  transform: translateX(0.35rem);
+}
+
+/* ── Staggered row animation (IntersectionObserver) ── */
+.sign .sign-row {
+  opacity: 0;
+  transform: translateX(2.5rem);
+}
+
+.sign.is-visible .sign-row {
+  animation: rowSlideIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation-delay: calc(var(--row-index, 0) * 0.1s);
+}
+
+/* ── Letter pop (badges del cartel de campaña) ── */
+.letter {
+  display: inline-block;
+  animation: letterPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--badge-index, 0) * 0.3s + var(--i, 0) * 0.055s);
+}
+
+.sign-footer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+  background-color: var(--color-footer-bg);
+  min-height: 4.5rem;
+}
+
+.sign-footer::before {
+  content: "";
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  width: 100%;
+  height: 1.5rem;
+  background-color: var(--color-footer-bg);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.sign-footer-text {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--color-footer-text);
+  letter-spacing: 0.15em;
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.08),
+    -1px -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* ── Campaign Sign (Cartel 2: ¡La Sede te Acompaña!) ── */
+.sign-campaign {
+  background-color: #e8901a;
+  grid-template-rows: auto auto auto auto;
+  padding: 0;
+  width: min(90%, 32rem);
+}
+
+.campaign-header {
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.campaign-title-line {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.campaign-excl {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #5b2d8e;
+}
+
+.excl-pulse {
+  display: inline-block;
+  animation: exclPulse 1.8s ease-in-out 1.5s infinite;
+}
+
+.campaign-excl--cyan  { color: #3ab3e0; }
+.campaign-excl--purple { color: #5b2d8e; }
+
+.campaign-badge {
+  font-size: clamp(1.4rem, 3.2vw, 1.9rem);
+  font-weight: 900;
+  color: white;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  animation: badgeSlide 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation-delay: calc(var(--badge-index, 0) * 0.3s);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.campaign-badge:hover {
+  transform: scale(1.1) rotate(-2deg);
+  filter: brightness(1.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.campaign-badge--cyan   { background: #3ab3e0; }
+.campaign-badge--purple { background: #5b2d8e; }
+
+.campaign-message {
+  padding: var(--spacing-sm) var(--spacing-md) 0;
+  font-size: clamp(1rem, 2.6vw, 1.35rem);
+  font-weight: 700;
+  color: #5b2d8e;
+  text-align: center;
+  line-height: 1.3;
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition: opacity 0.8s ease 1s, transform 0.8s ease 1s, filter 0.8s ease 1s;
+  cursor: default;
+}
+
+.campaign-message:hover {
+  transform: scale(1.05);
+  color: #3a106e;
+  transition: transform 0.25s ease, color 0.2s ease;
+}
+
+@starting-style {
+  .campaign-message {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    filter: blur(5px);
+  }
+}
+
+.campaign-img-wrapper {
+  overflow: hidden;
+}
+
+.campaign-img-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.campaign-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #1a1a2e;
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.campaign-footer-sep {
+  width: 1px;
+  height: 2.5rem;
+  background: #555;
+  flex-shrink: 0;
+}
+
+.campaign-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0 var(--spacing-xs);
+  animation: fadeInUp 0.4s ease both;
+  animation-delay: calc(1.4s + var(--logo-index, 0) * 0.1s);
+  transition: transform 0.25s ease, filter 0.25s ease;
+  cursor: default;
+}
+
+.campaign-logo:hover {
+  transform: translateY(-6px) scale(1.14);
+  filter: brightness(1.4);
+}
+
+.campaign-logo-big {
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  font-weight: 900;
+  color: white;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.campaign-logo-small {
+  font-size: clamp(0.42rem, 1vw, 0.58rem);
+  color: #aaaaaa;
+  text-align: center;
+  white-space: pre-line;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
